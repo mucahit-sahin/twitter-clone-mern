@@ -17,10 +17,12 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Avatar } from "@material-ui/core";
 import { Link, useLocation } from "react-router-dom";
 import MoreMenu from "../MoreMenu/MoreMenu";
+import ProfileCard from "./ProfileCard/ProfileCard";
 
 function Sidebar() {
   const [location] = React.useState(useLocation().pathname);
   const [moreActive, setMoreActive] = React.useState(false);
+  const [profileCardActive, setProfileCardActive] = React.useState(false);
   return (
     <div className="sidebar">
       <TwitterIcon className="twitter-icon" />
@@ -85,7 +87,12 @@ function Sidebar() {
         <SetTweetIcon className="setTweetIcon" />
         <span>Tweet</span>
       </div>
-      <div className="profileCard">
+      <div
+        className="profileCard"
+        onClick={() => setProfileCardActive(!profileCardActive)}
+      >
+        <ProfileCard active={profileCardActive} />
+        {profileCardActive && <div className="closeMoreMenuPanel" />}
         <div className="profileCardImage">
           <Avatar src="https://avatars2.githubusercontent.com/u/38807255?s=460&u=deb087d587be7f6a4000e4e710ec4d1daa6fde84&v=4" />
         </div>

@@ -1,22 +1,46 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./Signup.css";
 import Logo from "../../components/icons/Logo";
-import { Link } from "react-router-dom";
 import TextInput from "../../components/TextInput/TextInput";
+import { signup } from "../../store/actions/authActions";
 
 function Signup() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  function onSubmit(e) {
+    e.preventDefault();
+
+    dispatch(signup({ email, username, displayName, password }, history));
+  }
   return (
     <div className="signUpContainer">
-      <div className="card">
+      <form className="card" onSubmit={(e) => onSubmit(e)}>
         <div className="signuplogo">
           <Logo width={26} height={53} fill="white" />
         </div>
         <div className="signupHeader">
           <span>Create your account</span>
         </div>
-        <TextInput text="Name" />
-        <TextInput text="Email" />
-        <TextInput text="Date of Birth" />
+        <TextInput
+          text="Display Name"
+          value={displayName}
+          setValue={setDisplayName}
+        />
+        <TextInput text="Username" value={username} setValue={setUsername} />
+        <TextInput text="Email" value={email} setValue={setEmail} />
+        <TextInput
+          text="Password"
+          value={password}
+          setValue={setPassword}
+          type="password"
+        />
         <div className="acceptTerm">
           <span>
             When you register, you agree to the
@@ -28,10 +52,10 @@ function Signup() {
             accordingly, others can find you by email or phone number.
           </span>
         </div>
-        <Link to="/home" className="signupBtn">
-          <span className="signupText">Kaydol</span>
-        </Link>
-      </div>
+        <button className="signupBtn">
+          <span className="signupText">Register</span>
+        </button>
+      </form>
     </div>
   );
 }

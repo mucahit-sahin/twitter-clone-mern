@@ -2,14 +2,13 @@
   display: flex !important;
   flex-direction: row !important;
   padding: 0 10px;
-  max-width: 1300px ;
-  margin-left: auto ;
+  max-width: 1300px;
+  margin-left: auto;
   margin-right: auto;
   height: 100vh;
 }
 .homeBox {
-  max-width: 1300px ;
-  margin-left: auto ;
+  margin-left: auto;
   margin-right: auto;
   flex: 0.8;
   overflow-y: scroll;

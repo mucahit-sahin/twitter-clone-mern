@@ -1,24 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import Logo from "../../components/icons/Logo";
 import TextInput from "../../components/TextInput/TextInput";
+import { signin } from "../../store/actions/authActions";
 import "./Login.css";
 
 function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  function onSubmit(e) {
+    e.preventDefault();
+    dispatch(signin({ email, password }, history));
+  }
   return (
     <div className="container">
-      <div className="panel">
+      <form className="panel" onSubmit={(e) => onSubmit(e)}>
         <div className="panelHeader">
           <Logo width={39} fill="white" />
           <span className="panelHeaderText">Login to Twitter</span>
         </div>
         <div className="inputs">
-          <TextInput text="Phone, email or username" />
-          <TextInput text="Password" />
+          <TextInput
+            text="Phone, email or username"
+            value={email}
+            setValue={setEmail}
+          />
+          <TextInput text="Password" value={password} setValue={setPassword} />
         </div>
-        <Link to="/home" className="loginBtn">
-          <span className="loginText">Login</span>
-        </Link>
+        <button className="loginBtn">Login</button>
         <div className="loginLinks">
           <a href="/">
             <span className="link">Forgot password</span>
@@ -28,7 +42,7 @@ function Login() {
             <span className="link">Sign up on Twitter</span>
           </a>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

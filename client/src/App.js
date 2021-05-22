@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import SignIndex from "./pages/SignIndex/SignIndex";
 import Login from "./pages/Login/Login";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Signup from "./pages/Signup/Signup";
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
@@ -11,20 +11,41 @@ import Profile from "./pages/Profile/Profile";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Messages from "./pages/Messages/Messages";
 import Lists from "./pages/Lists/Lists";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const [user] = React.useState(JSON.parse(localStorage.getItem("profile")));
+
   return (
     <Switch>
-      <Route path="/" component={SignIndex} exact />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/home" component={Home} />
-      <Route path="/Explore" component={Explore} />
-      <Route path="/Notifications" component={Notifications} />
-      <Route path="/Messages" component={Messages}></Route>
-      <Route path="/Bookmarks" component={Bookmarks} />
-      <Route path="/Lists" component={Lists} />
-      <Route path="/Profile" component={Profile} />
+      <Route path="/" exact>
+        {user ? <Redirect to="/home" /> : <SignIndex />}
+      </Route>
+      <Route path="/login">{user ? <Redirect to="/home" /> : <Login />}</Route>
+      <Route path="/signup">
+        {user ? <Redirect to="/home" /> : <Signup />}
+      </Route>
+      <ProtectedRoute path="/home" exact>
+        <Home />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Explore">
+        <Explore />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Notifications">
+        <Notifications />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Messages">
+        <Messages />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Bookmarks">
+        <Bookmarks />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Lists">
+        <Lists />
+      </ProtectedRoute>
+      <ProtectedRoute path="/Profile">
+        <Profile />
+      </ProtectedRoute>
     </Switch>
   );
 }

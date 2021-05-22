@@ -1,9 +1,8 @@
 import React from "react";
 import "./TextInput.css";
 
-function TextInput({ text }) {
+function TextInput({ text, value, setValue, type }) {
   const [inputFocus, setInputFocus] = React.useState(false);
-  const [value, setValue] = React.useState("");
   function isValueSet() {
     setInputFocus(false);
   }
@@ -24,7 +23,7 @@ function TextInput({ text }) {
         {text}
       </label>
       <input
-        type="text"
+        type={type ? type : "text"}
         className="textInput"
         id={text}
         name={value}
@@ -33,6 +32,7 @@ function TextInput({ text }) {
           setInputFocus(true);
         }}
         onBlur={() => isValueSet()}
+        required
       />
     </div>
   );
