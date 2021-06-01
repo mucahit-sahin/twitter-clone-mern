@@ -8,9 +8,12 @@ import SharePostIcon from "../../icons/SharePostIcon";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { MillToDate } from "../../../utils/MillToDate";
 import ProfileCard from "../../ProfileCard/ProfileCard";
+import { useDispatch, useSelector } from "react-redux";
+import { likePost, unlikePost } from "../../../store/actions/postActions";
 
 function Post({ post }) {
   const {
+    _id,
     userimage,
     username,
     fullname,
@@ -21,6 +24,23 @@ function Post({ post }) {
     comments,
   } = post;
   const [isVisibleProfileCard, setIsVisibleProfileCard] = React.useState(false);
+  const auth = useSelector((state) => state.auth);
+  console.log(auth);
+  const active =
+    likes?.filter((like) => like.user.toString() === auth?.user?._id).length > 0
+      ? true
+      : false;
+  const dispatch = useDispatch();
+  function likeOrUnlike() {
+    if (
+      likes?.filter((like) => like.user.toString() === auth?.user?._id)
+        .length === 0
+    ) {
+      dispatch(likePost(_id));
+    } else {
+      dispatch(unlikePost(_id));
+    }
+  }
   return (
     <div className="post" onMouseLeave={() => setIsVisibleProfileCard(false)}>
       <ProfileCard active={isVisibleProfileCard && true} />
@@ -53,11 +73,16 @@ function Post({ post }) {
         <div className="post-event">
           <div>
             <CommentIcon className="postIcon" />
-            <span>{comments.length > 0 ? comments.length : ""}</span>
+            <span>{comments && comments.length > 0 && comments.length}</span>
           </div>
           <div>
-            <FavoriteIcon className="postIcon" />
-            <span>{likes.length > 0 ? likes.length : ""}</span>
+            <div onClick={() => likeOrUnlike()}>
+              <FavoriteIcon
+                className={`postIcon ${active && "active"}`}
+                active={active}
+              />
+            </div>
+            <span>{likes.length > 0 && likes.length}</span>
           </div>
           <div>
             <RetweetIcon className="postIcon" />

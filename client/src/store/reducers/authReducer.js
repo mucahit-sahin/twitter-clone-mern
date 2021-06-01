@@ -6,7 +6,6 @@ import {
   LOGIN_SUCCESS,
   //LOGIN_FAIL,
   LOGOUT,
-  ACCOUNT_DELETED,
   USER_LOADED,
 } from "../actions/types";
 
@@ -24,11 +23,11 @@ function authReducer(state = initialState, action) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
+      console.log("loginyadaregister " + payload);
       return {
         ...state,
         ...payload,
       };
-    case ACCOUNT_DELETED:
     case AUTH_ERROR:
     case LOGOUT:
       localStorage.removeItem("token");

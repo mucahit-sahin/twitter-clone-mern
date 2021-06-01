@@ -43,7 +43,7 @@ const getUserPosts = async (req, res) => {
       return res.status(404).json({ msg: "Posts not found" });
     }
     res.json(posts);
-  } catch (error) {
+  } catch (errd) {
     console.error(err.message);
 
     res.status(500).send("Server Error");
@@ -54,7 +54,7 @@ const getPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     // Check for ObjectId format and post
-    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !post) {
+    if (!post) {
       return res.status(404).json({ msg: "Post not found" });
     }
 
@@ -65,4 +65,50 @@ const getPost = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-module.exports = { createPost, getAllPost, getUserPosts, getPost };
+
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post.likes.filter((like) => like.user.toString() == req.user.id) > 0) {
+      return res.status(400).json({ msg: "Post already liked" });
+    }
+    post.likes.unshift({ user: req.user.id });
+    await post.save();
+    return res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send("Server Error");
+  }
+};
+const unlikePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (
+      post.likes.filter((like) => like.user.toString() == req.user.id) === 0
+    ) {
+      return res.status(400).json({ msg: "Post has not yet been liked" });
+    }
+
+    const removeIndex = post.likes
+      .map((like) => like.user.toString())
+      .indexOf(req.user.id);
+
+    post.likes.splice(removeIndex, 1);
+
+    await post.save();
+    return res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send("Server Error");
+  }
+};
+module.exports = {
+  createPost,
+  getAllPost,
+  getUserPosts,
+  getPost,
+  likePost,
+  unlikePost,
+};

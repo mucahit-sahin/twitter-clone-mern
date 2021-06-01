@@ -20,7 +20,7 @@ function Feed() {
   React.useEffect(() => {
     dispatch(getAllPosts());
     setLoading(false);
-  }, [dispatch]);
+  }, [dispatch, getAllPosts]);
   return (
     <section className="feed">
       {isDrawerBar && (

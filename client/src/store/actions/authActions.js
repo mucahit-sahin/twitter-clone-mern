@@ -21,9 +21,9 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    /*dispatch({
+    dispatch({
       type: AUTH_ERROR,
-    });*/
+    });
   }
 };
 
@@ -36,6 +36,7 @@ export const register = (formData, history) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
+    dispatch(loadUser());
     history.push("/home");
   } catch (err) {
     //const errors = err.response.data.errors;
@@ -56,6 +57,7 @@ export const login = (email, password, history) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+    dispatch(loadUser());
     history.push("/home");
   } catch (err) {
     //const errors = err.response.data.errors;

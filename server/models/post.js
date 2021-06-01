@@ -14,8 +14,33 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  likes: { type: [{ type: ObjectId, ref: "User" }], default: [] },
-  comments: { type: [{ type: ObjectId, ref: "User" }], default: [] },
+  likes: [
+    {
+      user: {
+        type: ObjectId,
+        ref: "users",
+      },
+    },
+  ],
+  comments: [
+    {
+      user: {
+        type: ObjectId,
+        ref: "users",
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      username: {
+        type: String,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 const Post = model("Post", postSchema);
