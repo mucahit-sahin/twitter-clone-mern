@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import SignIndex from "./pages/SignIndex/SignIndex";
 import Login from "./pages/Login/Login";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import Signup from "./pages/Signup/Signup";
 import Home from "./pages/Home/Home";
 import Explore from "./pages/Explore/Explore";
@@ -12,19 +12,31 @@ import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Messages from "./pages/Messages/Messages";
 import Lists from "./pages/Lists/Lists";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AuthRoute from "./components/AuthRoute";
+import setAuthToken from "./utils/setAuthToken";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./store/actions/authActions";
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 function App() {
-  const [user] = React.useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
 
   return (
     <Switch>
-      <Route path="/" exact>
-        {user ? <Redirect to="/home" /> : <SignIndex />}
-      </Route>
-      <Route path="/login">{user ? <Redirect to="/home" /> : <Login />}</Route>
-      <Route path="/signup">
-        {user ? <Redirect to="/home" /> : <Signup />}
-      </Route>
+      <AuthRoute path="/" exact>
+        <SignIndex />
+      </AuthRoute>
+      <AuthRoute path="/login">
+        <Login />
+      </AuthRoute>
+      <AuthRoute path="/signup">
+        <Signup />
+      </AuthRoute>
       <ProtectedRoute path="/home" exact>
         <Home />
       </ProtectedRoute>

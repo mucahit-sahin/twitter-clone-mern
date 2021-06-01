@@ -1,12 +1,13 @@
-import posts from "../../data/posts";
-
-const initialstate = { posts };
-function postsReducer(state = initialstate, action) {
+function postsReducer(state = [], action) {
   switch (action.type) {
-    case "ADD_POST":
-      var arr = [...state.posts];
-      arr.unshift(action.payload);
-      return { ...state, posts: arr };
+    case "GET_ALL_POST":
+      return action.payload;
+    case "CREATE_POST":
+      return [...state, action.payload];
+    case "GET_USER_POSTS":
+      return action.payload;
+    case "GET_POST":
+      return action.payload;
     default:
       return state;
   }

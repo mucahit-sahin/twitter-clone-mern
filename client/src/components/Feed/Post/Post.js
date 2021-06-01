@@ -9,7 +9,17 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { MillToDate } from "../../../utils/MillToDate";
 import ProfileCard from "../../ProfileCard/ProfileCard";
 
-function Post({ userimage, username, displayName, text, shareImage, date }) {
+function Post({ post }) {
+  const {
+    userimage,
+    username,
+    fullname,
+    text,
+    shareImage,
+    date,
+    likes,
+    comments,
+  } = post;
   const [isVisibleProfileCard, setIsVisibleProfileCard] = React.useState(false);
   return (
     <div className="post" onMouseLeave={() => setIsVisibleProfileCard(false)}>
@@ -28,7 +38,7 @@ function Post({ userimage, username, displayName, text, shareImage, date }) {
               }, 1000);
             }}
           >
-            {displayName}
+            {fullname}
           </span>
           <span className="post-header-username">{"@" + username}</span>
           <span className="post-header-date">{MillToDate(date)}</span>
@@ -43,11 +53,11 @@ function Post({ userimage, username, displayName, text, shareImage, date }) {
         <div className="post-event">
           <div>
             <CommentIcon className="postIcon" />
-            <span>5</span>
+            <span>{comments.length > 0 ? comments.length : ""}</span>
           </div>
           <div>
             <FavoriteIcon className="postIcon" />
-            <span>5</span>
+            <span>{likes.length > 0 ? likes.length : ""}</span>
           </div>
           <div>
             <RetweetIcon className="postIcon" />

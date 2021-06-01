@@ -1,12 +1,15 @@
 import { Avatar } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { logout } from "../../../store/actions/authActions";
 import "./ProfileCard.css";
 
 const ProfileCard = ({ active }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem("profile"));
+
   return (
     <div className={active ? "profileCardPopup" : "unVisible"}>
       <div className="profileCardPopupHeader">
@@ -31,11 +34,11 @@ const ProfileCard = ({ active }) => {
       <div
         className="profileCardLogout"
         onClick={() => {
-          localStorage.removeItem("profile");
+          dispatch(logout());
           history.push("/");
         }}
       >
-        <span>Log out {user?.result.username}</span>
+        <span>Log out Mücahit</span>
       </div>
     </div>
   );

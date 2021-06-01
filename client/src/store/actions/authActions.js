@@ -1,25 +1,70 @@
-import * as api from "../../api/index.js";
+import api from "../../api/index";
+import setAuthToken from "../../utils/setAuthToken";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+} from "./types";
 
-export const signin = (formData, router) => async (dispatch) => {
+// Load User
+export const loadUser = () => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  setAuthToken(token);
   try {
-    const { data } = await api.signIn(formData);
-
-    dispatch({ type: "AUTH", data });
-
-    router.push("/home");
-  } catch (error) {
-    console.log(error);
+    const res = await api.get("/auth");
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    /*dispatch({
+      type: AUTH_ERROR,
+    });*/
   }
 };
 
-export const signup = (formData, router) => async (dispatch) => {
+// Register User
+export const register = (formData, history) => async (dispatch) => {
   try {
-    const { data } = await api.signUp(formData);
+    const res = await api.post("/users", formData);
 
-    dispatch({ type: "AUTH", data });
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+    history.push("/home");
+  } catch (err) {
+    //const errors = err.response.data.errors;
 
-    router.push("/home");
-  } catch (error) {
-    console.log(error);
+    dispatch({
+      type: REGISTER_FAIL,
+    });
   }
 };
+
+// Login User
+export const login = (email, password, history) => async (dispatch) => {
+  const body = { email, password };
+  try {
+    const res = await api.post("/auth", body);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    history.push("/home");
+  } catch (err) {
+    //const errors = err.response.data.errors;
+
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+// Logout
+export const logout = () => ({ type: LOGOUT });

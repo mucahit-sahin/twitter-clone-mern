@@ -1,24 +1,22 @@
 import React from "react";
+import "./Signup.css";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import "./Signup.css";
 import Logo from "../../components/icons/Logo";
 import TextInput from "../../components/TextInput/TextInput";
-import { signup } from "../../store/actions/authActions";
-
+import { register } from "../../store/actions/authActions";
 function Signup() {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
-  const [displayName, setDisplayName] = React.useState("");
+  const [fullname, setFullname] = React.useState("");
   const [password, setPassword] = React.useState("");
-  function onSubmit(e) {
+  const onSubmit = async (e) => {
     e.preventDefault();
-
-    dispatch(signup({ email, username, displayName, password }, history));
-  }
+    dispatch(register({ email, username, fullname, password }, history));
+    console.log("register");
+  };
   return (
     <div className="signUpContainer">
       <form className="card" onSubmit={(e) => onSubmit(e)}>
@@ -30,8 +28,8 @@ function Signup() {
         </div>
         <TextInput
           text="Display Name"
-          value={displayName}
-          setValue={setDisplayName}
+          value={fullname}
+          setValue={setFullname}
         />
         <TextInput text="Username" value={username} setValue={setUsername} />
         <TextInput text="Email" value={email} setValue={setEmail} />

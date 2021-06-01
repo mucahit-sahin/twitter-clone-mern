@@ -1,22 +1,21 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import Logo from "../../components/icons/Logo";
 import TextInput from "../../components/TextInput/TextInput";
-import { signin } from "../../store/actions/authActions";
+import { login } from "../../store/actions/authActions";
 import "./Login.css";
 
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  function onSubmit(e) {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signin({ email, password }, history));
-  }
+    dispatch(login(email, password, history));
+  };
+
   return (
     <div className="container">
       <form className="panel" onSubmit={(e) => onSubmit(e)}>
