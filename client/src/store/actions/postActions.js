@@ -29,7 +29,6 @@ export const getAllPosts = () => async (dispatch) => {
 export const getUserPosts = (userId) => async (dispatch) => {
   try {
     const { data } = await api.get(`/posts/user/${userId}`);
-
     dispatch({ type: GET_USER_POSTS, payload: data });
   } catch (error) {
     console.log(error);

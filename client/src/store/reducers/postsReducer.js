@@ -7,21 +7,21 @@ import {
   UNLIKED_POST,
 } from "../actions/types";
 
-function postsReducer(state = [], action) {
+function postsReducer(state = { posts: [], userPosts: [] }, action) {
   switch (action.type) {
     case GET_ALL_POST:
-      return action.payload;
+      return { ...state, posts: action.payload };
     case CREATE_POST:
-      return [...state, action.payload];
+      return { ...state, posts: [...state.posts, action.payload] };
     case GET_USER_POSTS:
-      return action.payload;
+      return { ...state, userPosts: action.payload };
     case GET_POST:
       return action.payload;
     case LIKED_POST:
     case UNLIKED_POST:
-      const post = state.find((post) => post._id === action.payload.id);
+      const post = state.posts.find((post) => post._id === action.payload.id);
       post.likes = action.payload.data;
-      return [...state];
+      return { ...state };
     default:
       return state;
   }

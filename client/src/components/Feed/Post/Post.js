@@ -25,7 +25,6 @@ function Post({ post }) {
   } = post;
   const [isVisibleProfileCard, setIsVisibleProfileCard] = React.useState(false);
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
   const active =
     likes?.filter((like) => like.user.toString() === auth?.user?._id).length > 0
       ? true
@@ -82,7 +81,7 @@ function Post({ post }) {
                 active={active}
               />
             </div>
-            <span>{likes.length > 0 && likes.length}</span>
+            <span>{likes && likes.length > 0 && likes.length}</span>
           </div>
           <div>
             <RetweetIcon className="postIcon" />

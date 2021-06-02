@@ -24,7 +24,7 @@ function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, loadUser]);
 
   return (
     <Switch>

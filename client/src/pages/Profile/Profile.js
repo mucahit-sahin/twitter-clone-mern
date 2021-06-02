@@ -9,21 +9,26 @@ import Post from "../../components/Feed/Post/Post";
 import BackIcon from "@material-ui/icons/KeyboardBackspace";
 import ScheduleIcon from "@material-ui/icons/CalendarToday";
 import { Avatar } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Links from "../../components/Widgets/Links/Links";
 import HomeBox from "../../components/HomeBox/HomeBox";
 import Loading from "../../components/Loading/Loading";
+import { getUserPosts } from "../../store/actions/postActions";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [category, setCategory] = React.useState(1);
-  const { posts } = useSelector((state) => state.posts);
-  let history = useHistory();
-  document.title = "Mücahit Şahin (@mucahitsahin6) / Twitter";
   const [loading, setLoading] = React.useState(true);
-  setTimeout(() => {
+  const user = useSelector((state) => state.auth).user;
+  const userPosts = useSelector((state) => state.posts).userPosts;
+
+  React.useEffect(() => {
+    if (!user) return;
+    dispatch(getUserPosts(user._id));
     setLoading(false);
-  }, 2000);
+  }, [dispatch, getUserPosts]);
   return (
     <HomeBox>
       <section className="feed">
@@ -32,7 +37,7 @@ const Profile = () => {
             <BackIcon />
           </div>
           <div>
-            <span>Mücahit Şahin</span>
+            <span>{user.fullname}</span>
             <span>12 Tweets</span>
           </div>
         </div>
@@ -40,15 +45,15 @@ const Profile = () => {
           <div className="backgroundImage"></div>
           <div className="profileTitle">
             <div className="profileImage">
-              <Avatar src="https://avatars2.githubusercontent.com/u/38807255?s=460&u=deb087d587be7f6a4000e4e710ec4d1daa6fde84&v=4" />
+              <Avatar src="" />
             </div>
             <div className="editProfile">
               <span>Edit Profile</span>
             </div>
           </div>
           <div className="profileBiography">
-            <span>Mücahit Şahin</span>
-            <span>@Mucahitsahin6</span>
+            <span>{user.fullname}</span>
+            <span>@{user.username}</span>
             <span>Junior Software Developer</span>
             <span>
               <ScheduleIcon />
@@ -94,17 +99,7 @@ const Profile = () => {
         </div>
         <article className="profilePosts">
           {!loading ? (
-            posts.map((post) => (
-              <Post
-                key={post.id}
-                username={post.username}
-                userimage={post.userimage}
-                date={post.date}
-                displayName={post.displayName}
-                text={post.text}
-                shareImage={post.shareImage}
-              />
-            ))
+            userPosts?.map((post) => <Post key={post.id} post={post} />)
           ) : (
             <Loading />
           )}

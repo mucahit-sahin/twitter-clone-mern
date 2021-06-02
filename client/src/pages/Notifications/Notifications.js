@@ -87,21 +87,27 @@ function Notifications() {
                   }}
                 />
                 <Post
-                  username="cnecati"
-                  userimage="https://pbs.twimg.com/profile_images/1348390204810407937/BmUVaYGD_400x400.jpg"
-                  displayName="Cihat Necati"
-                  text="@mucahitsahin Projelerine github.com/mucahit-sahin adresinden ulaşabilirsiniz"
-                  date="1614077764184"
+                  post={{
+                    username: "cnecati",
+                    userimage:
+                      "https://pbs.twimg.com/profile_images/1348390204810407937/BmUVaYGD_400x400.jpg",
+                    fullname: "Cihat Necati",
+                    text: "@mucahitsahin Projelerine github.com/mucahit-sahin adresinden ulaşabilirsiniz",
+                    date: "1614077764184",
+                  }}
                 />
               </>
             ) : (
               <>
                 <Post
-                  username="cnecati"
-                  userimage="https://pbs.twimg.com/profile_images/1348390204810407937/BmUVaYGD_400x400.jpg"
-                  displayName="Cihat Necati"
-                  text="@mucahitsahin Projelerine github.com/mucahit-sahin adresinden ulaşabilirsiniz"
-                  date="1614077764184"
+                  post={{
+                    username: "cnecati",
+                    userimage:
+                      "https://pbs.twimg.com/profile_images/1348390204810407937/BmUVaYGD_400x400.jpg",
+                    fullname: "Cihat Necati",
+                    text: "@mucahitsahin Projelerine github.com/mucahit-sahin adresinden ulaşabilirsiniz",
+                    date: "1614077764184",
+                  }}
                 />
               </>
             )
