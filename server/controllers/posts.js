@@ -104,6 +104,27 @@ const unlikePost = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+const addComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const user = await User.findById(req.user.id).select("-password");
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    post.comments.unshift({
+      user: req.user.id,
+      username: user.username,
+      fullname: user.fullname,
+      text: req.body.comment,
+    });
+    await post.save();
+    return res.json(post.comments);
+  } catch (error) {
+    console.error(error.message);
+
+    res.status(500).send("Server Error");
+  }
+};
 module.exports = {
   createPost,
   getAllPost,
@@ -111,4 +132,5 @@ module.exports = {
   getPost,
   likePost,
   unlikePost,
+  addComment,
 };

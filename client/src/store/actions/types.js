@@ -10,5 +10,5 @@ export const GET_ALL_POST = "GET_ALL_POST";
 export const GET_POST = "GET_POST";
 export const CREATE_POST = "CREATE_POST";
 export const GET_USER_POSTS = "GET_USER_POSTS";
-export const LIKED_POST = "LIKED_POST";
-export const UNLIKED_POST = "UNLIKED_POST";
+export const UPDATE_LIKES = "UPDATE_LIKES";
+export const ADD_COMMENT = "ADD_COMMENT";

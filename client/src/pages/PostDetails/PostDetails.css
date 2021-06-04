@@ -1,0 +1,25 @@
+.post-details-header {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0px 8px 12px;
+}
+.post-details-header > div:first-child {
+  flex: 0.1;
+}
+.post-details-header > div:first-child svg {
+  fill: var(--blue);
+  padding: 5px;
+  border-radius: 9999px;
+}
+.post-details-header > div:first-child svg:hover {
+  background-color: var(--hover-blue-color);
+}
+.post-details-header > div:last-child {
+  flex: 0.9;
+}
+.post-details-header > div:last-child span {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+}

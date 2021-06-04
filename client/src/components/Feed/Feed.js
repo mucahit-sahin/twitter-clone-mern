@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts } from "../../store/actions/postActions";
 
 function Feed() {
-  const posts = useSelector((state) => state.posts).posts;
+  const posts = useSelector((state) => state.posts).posts || [];
   const dispatch = useDispatch();
 
   const [isDrawerBar, setIsDrawerBar] = React.useState(false);

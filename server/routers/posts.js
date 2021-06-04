@@ -7,6 +7,7 @@ const {
   getPost,
   likePost,
   unlikePost,
+  addComment,
 } = require("../controllers/posts");
 const auth = require("../middlewares/auth");
 const router = express.Router();
@@ -21,5 +22,6 @@ router.get("/user/:user_id", auth, getUserPosts);
 router.get("/:id", auth, getPost);
 router.put("/like/:id", auth, likePost);
 router.put("/unlike/:id", auth, unlikePost);
+router.post("/:id", auth, addComment);
 
 module.exports = router;

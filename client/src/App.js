@@ -16,6 +16,7 @@ import AuthRoute from "./components/AuthRoute";
 import setAuthToken from "./utils/setAuthToken";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./store/actions/authActions";
+import { PostDetails } from "./pages/PostDetails/PostDetails";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -39,6 +40,9 @@ function App() {
       </AuthRoute>
       <ProtectedRoute path="/home" exact>
         <Home />
+      </ProtectedRoute>
+      <ProtectedRoute path="/post/:id">
+        <PostDetails />
       </ProtectedRoute>
       <ProtectedRoute path="/Explore">
         <Explore />

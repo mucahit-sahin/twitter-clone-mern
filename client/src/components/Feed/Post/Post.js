@@ -10,6 +10,7 @@ import { MillToDate } from "../../../utils/MillToDate";
 import ProfileCard from "../../ProfileCard/ProfileCard";
 import { useDispatch, useSelector } from "react-redux";
 import { likePost, unlikePost } from "../../../store/actions/postActions";
+import { useHistory } from "react-router";
 
 function Post({ post }) {
   const {
@@ -23,6 +24,7 @@ function Post({ post }) {
     likes,
     comments,
   } = post;
+  const history = useHistory();
   const [isVisibleProfileCard, setIsVisibleProfileCard] = React.useState(false);
   const auth = useSelector((state) => state.auth);
   const active =
@@ -41,7 +43,11 @@ function Post({ post }) {
     }
   }
   return (
-    <div className="post" onMouseLeave={() => setIsVisibleProfileCard(false)}>
+    <div
+      className="post"
+      onMouseLeave={() => setIsVisibleProfileCard(false)}
+      onClick={() => history.push(`/post/${_id}`)}
+    >
       <ProfileCard active={isVisibleProfileCard && true} />
       <div>
         <Avatar src={userimage} />
@@ -75,7 +81,12 @@ function Post({ post }) {
             <span>{comments && comments.length > 0 && comments.length}</span>
           </div>
           <div>
-            <div onClick={() => likeOrUnlike()}>
+            <div
+              onClick={(e) => {
+                likeOrUnlike();
+                e.stopPropagation();
+              }}
+            >
               <FavoriteIcon
                 className={`postIcon ${active && "active"}`}
                 active={active}

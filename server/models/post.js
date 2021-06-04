@@ -35,6 +35,9 @@ const postSchema = new Schema({
       username: {
         type: String,
       },
+      fullname: {
+        type: String,
+      },
       date: {
         type: Date,
         default: Date.now,

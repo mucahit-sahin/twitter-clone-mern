@@ -4,8 +4,8 @@ import {
   GET_ALL_POST,
   GET_POST,
   GET_USER_POSTS,
-  LIKED_POST,
-  UNLIKED_POST,
+  UPDATE_LIKES,
+  ADD_COMMENT,
 } from "./types";
 
 export const shareTweet = (post) => async (dispatch) => {
@@ -48,7 +48,7 @@ export const likePost = (postId) => async (dispatch) => {
   try {
     const { data } = await api.put(`/posts/like/${postId}`);
 
-    dispatch({ type: LIKED_POST, payload: { id: postId, data } });
+    dispatch({ type: UPDATE_LIKES, payload: { id: postId, data } });
   } catch (error) {
     console.log(error);
   }
@@ -58,8 +58,20 @@ export const unlikePost = (postId) => async (dispatch) => {
     const { data } = await api.put(`/posts/unlike/${postId}`);
 
     dispatch({
-      type: UNLIKED_POST,
+      type: UPDATE_LIKES,
       payload: { id: postId, data },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addComment = (id, comment) => async (dispatch) => {
+  try {
+    const { data } = await api.post(`/posts/${id}`, { comment });
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: { data },
     });
   } catch (error) {
     console.log(error);
