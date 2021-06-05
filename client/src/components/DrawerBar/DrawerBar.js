@@ -18,7 +18,9 @@ import {
 } from "../icons";
 import MoreMenuItem from "../MoreMenu/MoreMenuItem/MoreMenuItem";
 import "./DrawerBar.css";
+import { useSelector } from "react-redux";
 const DrawerBar = ({ active }) => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className={`drawerBar ${active && "active"}`}>
       <div className="drawerBarHeader">
@@ -28,11 +30,11 @@ const DrawerBar = ({ active }) => {
       <div className="draweBarScroll">
         <div className="drawerBarProfile">
           <div>
-            <Avatar src="https://avatars.githubusercontent.com/u/38807255?s=460&u=deb087d587be7f6a4000e4e710ec4d1daa6fde84&v=4" />
+            <Avatar src="" />
             <AddIcon />
           </div>
-          <span>Mücahit Şahin</span>
-          <span>@mucahitsahin6</span>
+          <span>{user?.fullname}</span>
+          <span>@{user?.username}</span>
           <div>
             <span>
               <span>167</span>

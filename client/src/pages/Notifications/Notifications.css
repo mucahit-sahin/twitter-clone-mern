@@ -53,7 +53,7 @@
 }
 @media (min-width: 0) and (max-width: 450px) {
   .notificationsTitle .MuiAvatar-root {
-    display: block;
+    display: flex;
     margin-right: 20px;
     height: 32px;
     width: 32px;

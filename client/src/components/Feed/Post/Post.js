@@ -48,7 +48,13 @@ function Post({ post }) {
       onMouseLeave={() => setIsVisibleProfileCard(false)}
       onClick={() => history.push(`/post/${_id}`)}
     >
-      <ProfileCard active={isVisibleProfileCard && true} />
+      <ProfileCard
+        active={isVisibleProfileCard && true}
+        user={{
+          username,
+          fullname,
+        }}
+      />
       <div>
         <Avatar src={userimage} />
       </div>

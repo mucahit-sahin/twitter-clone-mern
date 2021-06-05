@@ -1,7 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../../store/actions/authActions";
 import "./ProfileCard.css";
@@ -9,19 +9,19 @@ import "./ProfileCard.css";
 const ProfileCard = ({ active }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className={active ? "profileCardPopup" : "unVisible"}>
       <div className="profileCardPopupHeader">
         <div className="profileCardImage">
-          <Avatar src="https://avatars2.githubusercontent.com/u/38807255?s=460&u=deb087d587be7f6a4000e4e710ec4d1daa6fde84&v=4" />
+          <Avatar src="" />
         </div>
         <div className="profileCardNameCol">
           <div className="profileCardNameColName">
-            <span>Mücahit Şahin</span>
+            <span>{user?.fullname}</span>
           </div>
           <div className="profileCardNameColuserName">
-            <span>@Mucahitsahin6</span>
+            <span>@{user?.username}</span>
           </div>
         </div>
         <div className="profileCardIcon">
@@ -38,7 +38,7 @@ const ProfileCard = ({ active }) => {
           history.push("/");
         }}
       >
-        <span>Log out Mücahit</span>
+        <span>Log out {user?.fullname}</span>
       </div>
     </div>
   );

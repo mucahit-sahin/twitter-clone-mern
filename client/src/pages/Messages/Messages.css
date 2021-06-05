@@ -37,7 +37,7 @@
   .messages {
     flex: 1;
   }
-  .messagesNone{
+  .messagesNone {
     display: none;
   }
 }
@@ -46,7 +46,7 @@
     flex: 1;
   }
   .messagesHeader .MuiAvatar-root {
-    display: block;
+    display: flex;
     margin-right: 20px;
     height: 32px;
     width: 32px;

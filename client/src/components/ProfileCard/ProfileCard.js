@@ -3,7 +3,7 @@ import React from "react";
 import { VerifiedIcon } from "../icons";
 import "./ProfileCard.css";
 
-const ProfileCard = ({ active }) => {
+const ProfileCard = ({ active, user }) => {
   const [isVisible, setIsVisible] = React.useState(false);
   return (
     <div
@@ -14,17 +14,17 @@ const ProfileCard = ({ active }) => {
       onMouseLeave={() => setIsVisible(false)}
     >
       <div>
-        <Avatar src="https://avatars2.githubusercontent.com/u/38807255?s=460&u=deb087d587be7f6a4000e4e710ec4d1daa6fde84&v=4" />
+        <Avatar src="" />
         <div>
           <span>Follow</span>
         </div>
       </div>
       <div>
-        <span>Mücahit Şahin</span>
+        <span>{user.fullname}</span>
         <VerifiedIcon />
       </div>
       <div>
-        <span>@mucahitsahin6</span>
+        <span>@{user.username}</span>
       </div>
       <div>
         <span>Junior Software Developer</span>

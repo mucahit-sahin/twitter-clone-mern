@@ -1,6 +1,6 @@
 import React from "react";
 import "./PostDetails.css";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import BackIcon from "@material-ui/icons/KeyboardBackspace";
 import PostDetailsComponent from "../../components/PostDetailsComponent/PostDetailsComponent";
 import HomeBox from "../../components/HomeBox/HomeBox";
@@ -11,6 +11,7 @@ import Widgets from "../../components/Widgets/Widgets";
 export const PostDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { post } = useSelector((state) => state.posts);
   React.useEffect(() => {
     dispatch(getPost(id));
@@ -29,7 +30,7 @@ export const PostDetails = () => {
     <HomeBox>
       <div className="feed">
         <div className="post-details-header">
-          <div>
+          <div onClick={() => history.goBack()}>
             <BackIcon />
           </div>
           <div>
