@@ -2,9 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
+
 const userRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const postRouter = require("./routers/posts");
+const path = require("path/posix");
 
 const app = express();
 
@@ -16,11 +19,15 @@ app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 
-const CONNECTION_URL =
-  "mongodb+srv://dbtwitterclone:mucahitsahintwitterclone@cluster0.t1g6f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const CONNECTION_URL = process.env.MONGODB_CONNECTION_STRING;
 
 const PORT = process.env.PORT || 5000;
-
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 mongoose
   .connect(CONNECTION_URL, {
     useNewUrlParser: true,
